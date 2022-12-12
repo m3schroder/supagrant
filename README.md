@@ -1,34 +1,21 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Motivation
 
-## Getting Started
+This application is intended to make it easier for developers to integrate with email services such as Mailchimp, Aweber, etc.
+The developer can login using <strong  style="color: #22c55e">Supabase</strong> Auth and add the API credentials of their newsletter service. 
 
-First, run the development server:
+<br>On the frontend of the application (regardless of the framework they are using) .. they will be able to call a supabase function with the ID of their newsletter service, email, and name to subscribe the end user easily without writing any backend code for it and while having full control of the UI.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Getting Started
+The package.json contains a script "db-generate" that can be used to generate the **"Database"** type that reflects the current 
+<strong  style="color: #22c55e">Supabase</strong> database. 
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+In a typescript project you can use this "Database" to strongly type the <strong style="color: #22c55e">Supabase</strong> object.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+---
+<div style="padding: 20px; display:grid; grid-template-columns: 1fr 1fr; gap: 12px">
+<img alt="login" src="public/login.png" width=400 />
+<img alt="config image" src="public/config.png" height=270 />
+<img alt="config list" src="public/config_list.png" width=400 />
+<img alt="test integration" src="public/test_int.png" width=400 />
+</div>
