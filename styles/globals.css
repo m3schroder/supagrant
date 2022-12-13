@@ -4,10 +4,10 @@
 
 @layer utilities {
     .text{
-        @apply dark:text-white text-slate-900 transition-colors
+        @apply dark:text-neutral-50 text-neutral-800
     }
     .btn{
-        @apply dark:bg-white bg-slate-900 text-white dark:text-slate-900 rounded-md transition-colors
+        @apply dark:bg-white bg-neutral-900 text-white dark:text-neutral-900 rounded-md transition-colors
     }
     .screen{
         @apply w-screen h-screen;
