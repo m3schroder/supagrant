@@ -6,6 +6,7 @@ export const aweber: IntegrationConfig = new IntegrationConfig({
   oauthObject: {
     clientId: Deno.env.get("AWEBER_CLIENT_ID")!,
     clientSecret: Deno.env.get("AWEBER_CLIENT_SECRET")!,
+    redirectUri: Deno.env.get("CALLBACK_REDIRECT_URL"),
     authorizationEndpointUri: "https://auth.aweber.com/oauth2/authorize",
     tokenUri: "https://auth.aweber.com/oauth2/token",
     defaults: {

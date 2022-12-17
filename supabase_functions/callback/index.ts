@@ -22,25 +22,39 @@ serve(async (req: Request) => {
   const entry = await getIntegration(integerationId);
   const integration = entry!.data![0].integration;
 
-
   const oauth2Client = new OAuth2Client(
     IntegrationConfig.getService(integration).oauthObject
   );
 
-  console.log(IntegrationConfig.getService(integration).oauthObject);
-  console.log(oauth2Client);
-
   // Obtain authorization URL
-  const result = await oauth2Client.code.getToken(req.url);
+  try {
+      // Here we're exchanging the temporary code for the user's access token.
+      const result = await fetch(oauth2Client.config.tokenUri, {
+        method: "POST",
+        body: new URLSearchParams({
+          grant_type: "authorization_code",
+          client_id: oauth2Client.config.clientId!,
+          client_secret: oauth2Client.config.clientSecret!,
+          redirect_uri: oauth2Client.config.redirectUri!,
+          code: u.searchParams.get("code")!,
+        }),
+      });
 
-  console.log(oauth2Client);
+      const obj = await result.json();
+      console.log ( obj );
 
-  // Save access_token and refreh_token
-  await updateIntegration(
-    integerationId,
-    result.accessToken,
-    result.refreshToken!
-  );
+      await updateIntegration(
+        integerationId,
+        obj.access_token,
+        obj.refresh_token
+      );
+
+  } catch (error) {
+    return new Response(JSON.stringify({ error: error.message }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      status: 400,
+    });
+  }
 
   try {
     return Response.redirect(
@@ -81,7 +95,7 @@ async function getIntegration(id: string) {
 async function updateIntegration(
   id: string,
   access_token: string,
-  refresh_token: string
+  refresh_token: string | undefined
 ) {
   const supabaseClient = createClient(
     // Supabase API URL - env var exported by default.
