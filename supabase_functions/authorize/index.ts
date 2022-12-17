@@ -9,8 +9,6 @@ import {
 import { EMAIL_SERVICES } from "../_emailServices/services.ts";
 
 serve(async (req: Request): Promise<Response> => {
-  EmailService.RegisterServices(EMAIL_SERVICES);
-
   // This is needed to invoke your function from a browser.
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -64,6 +62,5 @@ async function storeIntegeration() {
     integeration: "AWEBER",
   }).select();
 
-  console.log(result);
   return result as PostgrestResponse<Integeration>;
 }

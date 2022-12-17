@@ -1,4 +1,5 @@
 import { OAuth2ClientConfig } from "https://deno.land/x/oauth2_client@v1.0.0/mod.ts";
+import { EMAIL_SERVICES } from "../_emailServices/services.ts";
 
 export type Integeration = {
   id?: string;
@@ -33,9 +34,12 @@ export class EmailService {
   }
 
   public static getService(serviceName: string): EmailService {
-    console.log(EmailService.services);
     return EmailService.services.find(
       (service) => service.name == serviceName
     )!;
   }
 }
+
+// Register All Email services
+EmailService.RegisterServices(EMAIL_SERVICES);
+

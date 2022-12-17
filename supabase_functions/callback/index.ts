@@ -5,14 +5,11 @@ import {
   createClient,
   PostgrestResponse,
 } from "https://esm.sh/@supabase/supabase-js@2.2.0";
-import { EMAIL_SERVICES } from "../_emailServices/services.ts";
 
 import { corsHeaders } from "../_shared/cors.ts";
 import { EmailService, Integeration } from "../_shared/email.ts";
 
 serve(async (req: Request) => {
-  EmailService.RegisterServices(EMAIL_SERVICES);
-
   // This is needed to invoke your function from a browser.
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -57,7 +54,6 @@ async function getIntegeration(id: string) {
 
   const result = await supabaseClient.from("integeration").select();
 
-  console.log(result);
   return result as PostgrestResponse<Integeration>;
 }
 
@@ -65,5 +61,5 @@ async function getIntegeration(id: string) {
  * Save authentication access_token and refresh Token
  */
 async function updateIntegeration() {
-  
+
 }
