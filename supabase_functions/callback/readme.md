@@ -8,7 +8,7 @@ https://github.com/cmd-johnson/deno-oauth2-client/blob/master/examples/http.ts
 ----------------------
 
 To Deploy:
-supabase functions deploy requestAuthorization --project-ref azmzvdpframywobqkjmz --no-verify-jwt
+supabase functions deploy callback --project-ref azmzvdpframywobqkjmz --no-verify-jwt
 
 ----------------------
 

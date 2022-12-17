@@ -9,12 +9,13 @@ import {
 import { EMAIL_SERVICES } from "../_emailServices/services.ts";
 
 serve(async (req: Request): Promise<Response> => {
+  EmailService.RegisterServices(EMAIL_SERVICES);
+
   // This is needed to invoke your function from a browser.
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
 
-  EmailService.RegisterServices(EMAIL_SERVICES);
 
   const oauth2Client = new OAuth2Client(
     EmailService.getService("AWEBER").oauthObject
@@ -61,7 +62,7 @@ async function storeIntegeration() {
     title: "example 1",
     user_id: "fc28d40e-6993-476f-8d8d-58410ea8985e",
     integeration: "AWEBER",
-  });
+  }).select();
 
   console.log(result);
   return result as PostgrestResponse<Integeration>;
