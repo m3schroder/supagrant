@@ -7,7 +7,7 @@ import {
 } from "https://esm.sh/@supabase/supabase-js@2.2.0";
 
 import { corsHeaders } from "../_shared/cors.ts";
-import { EmailService, Integeration } from "../_shared/email.ts";
+import { Integration, IntegrationConfig } from "../_shared/integration.ts";
 
 serve(async (req: Request) => {
   // This is needed to invoke your function from a browser.
@@ -16,23 +16,27 @@ serve(async (req: Request) => {
   }
 
   const oauth2Client = new OAuth2Client(
-    EmailService.getService("AWEBER").oauthObject
+    IntegrationConfig.getService("AWEBER").oauthObject
   );
 
   // Obtain authorization URL
   const result = await oauth2Client.code.getToken(req.url);
 
-  // TODO - Save access token and refresh token in the database using the state ID
-
-  const data = {
-    redirectUrl: result,
-  };
+  // Save access_token and refreh_token
+  const u = new URL(req.url);
+  const integerationId = u.searchParams.get("state")!;
+  await updateIntegration(
+    integerationId,
+    result.accessToken,
+    result.refreshToken!
+  );
 
   try {
-    return new Response(JSON.stringify(data), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 200,
-    });
+    return Response.redirect(
+      "https://vercel-supanewsletter.com/integeration-completed?id=" +
+        integerationId,
+      307
+    );
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -44,7 +48,7 @@ serve(async (req: Request) => {
 /**
  * Retrieve the integeration to know it's type (Aweber vs Mailchimp vs ..)
  */
-async function getIntegeration(id: string) {
+async function getIntegration(id: string) {
   const supabaseClient = createClient(
     // Supabase API URL - env var exported by default.
     Deno.env.get("SUPABASE_URL") ?? "",
@@ -54,12 +58,31 @@ async function getIntegeration(id: string) {
 
   const result = await supabaseClient.from("integeration").select();
 
-  return result as PostgrestResponse<Integeration>;
+  return result as PostgrestResponse<Integration>;
 }
 
 /**
  * Save authentication access_token and refresh Token
  */
-async function updateIntegeration() {
+async function updateIntegration(
+  id: string,
+  access_token: string,
+  refresh_token: string
+) {
+  const supabaseClient = createClient(
+    // Supabase API URL - env var exported by default.
+    Deno.env.get("SUPABASE_URL") ?? "",
+    // Supabase API ANON KEY - env var exported by default.
+    Deno.env.get("SUPABASE_ANON_KEY") ?? ""
+  );
 
+  const result = await supabaseClient
+    .from("integeration")
+    .update({
+      access_token: access_token,
+      refresh_token: refresh_token,
+    })
+    .eq("id", id);
+
+  return result as PostgrestResponse<Integration>;
 }

@@ -1,8 +1,7 @@
 // Setup the Outh2 Object
+import { IntegrationConfig } from "../_shared/integration.ts";
 
-import { EmailService, Subscription } from "../_shared/email.ts";
-
-export const Aweber: EmailService = new EmailService({
+export const Aweber: IntegrationConfig = new IntegrationConfig({
   name: "AWEBER",
   oauthObject: {
     clientId: Deno.env.get("AWEBER_CLIENT_ID")!,
@@ -22,9 +21,5 @@ export const Aweber: EmailService = new EmailService({
         "landing-page.read",
       ],
     },
-  },
-  subscribe: (subscription: Subscription) => {
-    // TODO - Implement subscription with Aweber
-    return Promise.resolve(true);
   },
 });

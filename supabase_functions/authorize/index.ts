@@ -1,12 +1,11 @@
 import { serve } from "https://deno.land/std@0.131.0/http/server.ts";
 import { OAuth2Client } from "https://deno.land/x/oauth2_client@v1.0.0/mod.ts";
 import { corsHeaders } from "../_shared/cors.ts";
-import { EmailService, Integeration } from "../_shared/email.ts";
 import {
   createClient,
   PostgrestResponse,
 } from "https://esm.sh/@supabase/supabase-js@2.2.0";
-import { EMAIL_SERVICES } from "../_emailServices/services.ts";
+import { Integration, IntegrationConfig } from "../_shared/integration.ts";
 
 serve(async (req: Request): Promise<Response> => {
   // This is needed to invoke your function from a browser.
@@ -16,11 +15,11 @@ serve(async (req: Request): Promise<Response> => {
 
 
   const oauth2Client = new OAuth2Client(
-    EmailService.getService("AWEBER").oauthObject
+    IntegrationConfig.getService("AWEBER").oauthObject
   );
 
   // Save the state along with the title, domain, integeration type in the database
-  const integeration = await storeIntegeration();
+  const integeration = await storeIntegration();
 
   // The id of the integeration is the state
   const state = integeration.data![0].id;
@@ -48,7 +47,7 @@ serve(async (req: Request): Promise<Response> => {
   }
 });
 
-async function storeIntegeration() {
+async function storeIntegration() {
   const supabaseClient = createClient(
     // Supabase API URL - env var exported by default.
     Deno.env.get("SUPABASE_URL") ?? "",
@@ -62,5 +61,5 @@ async function storeIntegeration() {
     integeration: "AWEBER",
   }).select();
 
-  return result as PostgrestResponse<Integeration>;
+  return result as PostgrestResponse<Integration>;
 }
