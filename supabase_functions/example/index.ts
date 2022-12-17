@@ -36,8 +36,9 @@ serve(async (req: Request) => {
       }),
     });
     result = await response.json();
-  } else (integration.integration == "MAILCHIMP") {
-    const response = await fetch("https://api.aweber.com/1.0/accounts", {
+  // Todo call an example mailchimp request0
+  } else if (integration.integration == "MAILCHIMP") {
+    const response = await fetch("", {
       headers: new Headers({
         Authorization: "Bearer " + integration.access_token,
         "Content-Type": "application/x-www-form-urlencoded",
