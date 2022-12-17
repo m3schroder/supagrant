@@ -1,7 +1,7 @@
 // Setup the Outh2 Object
 import { IntegrationConfig } from "../_shared/integration.ts";
 
-export const Aweber: IntegrationConfig = new IntegrationConfig({
+export const aweber: IntegrationConfig = new IntegrationConfig({
   name: "AWEBER",
   oauthObject: {
     clientId: Deno.env.get("AWEBER_CLIENT_ID")!,

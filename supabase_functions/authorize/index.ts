@@ -13,13 +13,19 @@ serve(async (req: Request): Promise<Response> => {
     return new Response("ok", { headers: corsHeaders });
   }
 
+  // Save access_token and refreh_token
+  const url = new URL(req.url);
+  const integration = url.searchParams.get("integration")!;
+  const title = url.searchParams.get("title")!;
+
+
 
   const oauth2Client = new OAuth2Client(
-    IntegrationConfig.getService("AWEBER").oauthObject
+    IntegrationConfig.getService(integration).oauthObject
   );
 
   // Save the state along with the title, domain, integeration type in the database
-  const integeration = await storeIntegration();
+  const integeration = await storeIntegration(integration, title);
 
   // The id of the integeration is the state
   const state = integeration.data![0].id;
@@ -47,7 +53,7 @@ serve(async (req: Request): Promise<Response> => {
   }
 });
 
-async function storeIntegration() {
+async function storeIntegration(integration: string, title: string) {
   const supabaseClient = createClient(
     // Supabase API URL - env var exported by default.
     Deno.env.get("SUPABASE_URL") ?? "",
@@ -56,9 +62,8 @@ async function storeIntegration() {
   );
 
   const result = await supabaseClient.from("integeration").insert({
-    title: "example 1",
-    user_id: "fc28d40e-6993-476f-8d8d-58410ea8985e",
-    integeration: "AWEBER",
+    title: title,
+    integration: integration,
   }).select();
 
   return result as PostgrestResponse<Integration>;

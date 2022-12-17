@@ -15,16 +15,27 @@ serve(async (req: Request) => {
     return new Response("ok", { headers: corsHeaders });
   }
 
+  // Get State
+  const u = new URL(req.url);
+  const integerationId = u.searchParams.get("state")!;
+
+  const entry = await getIntegration(integerationId);
+  const integration = entry!.data![0].integration;
+
+
   const oauth2Client = new OAuth2Client(
-    IntegrationConfig.getService("AWEBER").oauthObject
+    IntegrationConfig.getService(integration).oauthObject
   );
+
+  console.log(IntegrationConfig.getService(integration).oauthObject);
+  console.log(oauth2Client);
 
   // Obtain authorization URL
   const result = await oauth2Client.code.getToken(req.url);
 
+  console.log(oauth2Client);
+
   // Save access_token and refreh_token
-  const u = new URL(req.url);
-  const integerationId = u.searchParams.get("state")!;
   await updateIntegration(
     integerationId,
     result.accessToken,
@@ -56,7 +67,10 @@ async function getIntegration(id: string) {
     Deno.env.get("SUPABASE_ANON_KEY") ?? ""
   );
 
-  const result = await supabaseClient.from("integeration").select();
+  const result = await supabaseClient
+    .from("integeration")
+    .select("integration")
+    .eq("id", id);
 
   return result as PostgrestResponse<Integration>;
 }

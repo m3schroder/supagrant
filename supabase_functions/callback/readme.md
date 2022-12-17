@@ -10,9 +10,3 @@ https://github.com/cmd-johnson/deno-oauth2-client/blob/master/examples/http.ts
 To Deploy:
 supabase functions deploy callback --project-ref azmzvdpframywobqkjmz --no-verify-jwt
 
-----------------------
-
-To Set Aweber Client ID and client Secret:
-supabase secrets set AWEBER_CLIENT_ID='REPLACE_CLIENT_ID'
-supabase secrets set AWEBER_CLIENT_SECRET='RELACE_CLIENT_SECRET'
-
