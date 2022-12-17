@@ -28,27 +28,26 @@ serve(async (req: Request) => {
 
   // Obtain authorization URL
   try {
-      // Here we're exchanging the temporary code for the user's access token.
-      const result = await fetch(oauth2Client.config.tokenUri, {
-        method: "POST",
-        body: new URLSearchParams({
-          grant_type: "authorization_code",
-          client_id: oauth2Client.config.clientId!,
-          client_secret: oauth2Client.config.clientSecret!,
-          redirect_uri: oauth2Client.config.redirectUri!,
-          code: u.searchParams.get("code")!,
-        }),
-      });
+    // Here we're exchanging the temporary code for the user's access token.
+    const result = await fetch(oauth2Client.config.tokenUri, {
+      method: "POST",
+      body: new URLSearchParams({
+        grant_type: "authorization_code",
+        client_id: oauth2Client.config.clientId!,
+        client_secret: oauth2Client.config.clientSecret!,
+        redirect_uri: oauth2Client.config.redirectUri!,
+        code: u.searchParams.get("code")!,
+      }),
+    });
 
-      const obj = await result.json();
-      console.log ( obj );
+    const obj = await result.json();
+    console.log(obj);
 
-      await updateIntegration(
-        integerationId,
-        obj.access_token,
-        obj.refresh_token
-      );
-
+    await updateIntegration(
+      integerationId,
+      obj.access_token,
+      obj.refresh_token
+    );
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },

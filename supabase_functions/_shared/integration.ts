@@ -7,6 +7,8 @@ export type Integration = {
   integration: string;
   userId: string;
   title: string;
+  access_token: string;
+  refresh_token: string;
 };
 
 // Configuration of an integuration
