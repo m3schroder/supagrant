@@ -9,7 +9,7 @@ import {
 import { corsHeaders } from "../_shared/cors.ts";
 import { Integration, IntegrationConfig } from "../_shared/integration.ts";
 
-import { updateIntegration } from '../_shared/token.ts';
+import { updateIntegration } from "../_shared/token.ts";
 
 serve(async (req: Request) => {
   // This is needed to invoke your function from a browser.
@@ -22,7 +22,7 @@ serve(async (req: Request) => {
   const integerationId = u.searchParams.get("state")!;
 
   const entry = await getIntegration(integerationId);
-  const integration = entry!.data![0].integration;
+  const integration = entry!.data![0].integration!;
 
   const oauth2Client = new OAuth2Client(
     IntegrationConfig.getService(integration).oauthObject
@@ -43,12 +43,19 @@ serve(async (req: Request) => {
     });
 
     const obj = await result.json();
-    console.log(obj);
+    let expires_at = null;
+
+    if (obj.expires_in) {
+      expires_at = new Date(
+        Date.now() + obj.expires_in! * 1000
+      ).toUTCString()!;
+    }
 
     await updateIntegration(
       integerationId,
       obj.access_token,
-      obj.refresh_token
+      obj.refresh_token,
+      expires_at
     );
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), {
