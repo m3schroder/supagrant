@@ -5,32 +5,25 @@ import {Eye, Edit} from 'react-feather'
 
 const Table = () => {
 
+    const handle = {
+        getAuthUrl: (provider: string, title: string = 'primary') => {
+            const url = new URL("https://azmzvdpframywobqkjmz.functions.supabase.co/authorize");
+            url.searchParams.append('integration', provider.toUpperCase());
+            url.searchParams.append('title', title);
+            return url.toString()
+        }
+
+    }
     const data = useMemo(
         () => [
             {
-                title: 'Acme Corp',
-                service: 'Mail Chimp',
+                provider: 'MailChimp',
                 last: 'May 26, 2019',
                 active: "False",
                 items: [<h3>Eye</h3>, <h3>Pencil</h3>]
             },
             {
-                title: 'Acme Corp',
-                service: 'Mail Chimp',
-                last: 'May 26, 2019',
-                active: "False",
-                items: [<h3>Eye</h3>, <h3>Pencil</h3>]
-            },
-            {
-                title: 'Acme Corp',
-                service: 'Mail Chimp',
-                last: 'May 26, 2019',
-                active: "True",
-                items: [<h3>Eye</h3>, <h3>Pencil</h3>]
-            },
-            {
-                title: 'Acme Corp',
-                service: 'Mail Chimp',
+                provider: 'Aweber',
                 last: 'May 26, 2019',
                 active: "False",
                 items: [<h3>Eye</h3>, <h3>Pencil</h3>]
@@ -41,12 +34,8 @@ const Table = () => {
     const columns = useMemo(
         () => [
             {
-                Header: 'Title',
-                accessor: 'title', // accessor is the "key" in the data
-            },
-            {
-                Header: 'Service',
-                accessor: 'service',
+                Header: 'Provider',
+                accessor: 'provider',
             },
             {
                 Header: 'Last Updated',
@@ -56,11 +45,9 @@ const Table = () => {
                 Header: 'Active',
                 accessor: 'active',
                 Cell: ({cell: {value}}) => {
-                    const cx = 'dark:hover:bg-neutral-800 hover:bg-neutral-100 rounded-lg inline-block p-2 h-10 w-10'
                     return (
-                        <span className={'text bg-accent px-4 py-[2px] rounded-full flex justify-between gap-5'}>
-                            {value}
-                        </span>
+                        <span
+                            className={`text  w-5 h-5 rounded-full flex justify-between gap-5 ${value === "True" ? "bg-emerald-400" : "bg-red-400"}`}/>
                     )
                 }
             },
@@ -70,10 +57,17 @@ const Table = () => {
                 Cell: ({cell}) => {
                     const cx = 'dark:hover:bg-neutral-800 hover:bg-neutral-100 rounded-lg inline-block p-2 h-10 w-10'
                     return (
-                        <div className={'text flex justify-between gap-5'}>
-                            <Eye className={cx}/>
-                            <Edit className={cx}/>
-                        </div>
+                        cell.active ? (
+                            <div className={'text flex justify-between gap-5'}>
+                                <Eye className={cx}/>
+                                <Edit className={cx}/>
+                            </div>
+                        ) : (
+                            <a href={handle.getAuthUrl(cell.row.cells[0].value)} _target="blank"
+                               className={'text dark:bg-emerald-600 bg-accent px-4 py-[2px] rounded-full flex justify-between gap-5'}>
+                                Connect
+                            </a>
+                        )
                     )
                 }
             },
@@ -93,10 +87,11 @@ const Table = () => {
             <h3 className={'mb-12 text font-bold text-2xl font-mono'}>Configuration List</h3>
             <section
                 className={"border-1 border-neutral-200 dark:bg-neutral-900 bg-white rounded-lg shadow-lg w-fit h-fit overflow-clip py-8"}>
-                <table {...getTableProps()} class={"bg-white dark:bg-neutral-900"}>
+                <table {...getTableProps()} className={"bg-white dark:bg-neutral-900"}>
                     <thead className={'pb-10'}>
                     {headerGroups.map(headerGroup => (
-                        <tr {...headerGroup.getHeaderGroupProps()} className={'border-neutral-900 dark:text-neutral-400'}>
+                        <tr {...headerGroup.getHeaderGroupProps()}
+                            className={'border-neutral-900 dark:text-neutral-400'}>
                             {headerGroup.headers.map(column => (
                                 <th
                                     {...column.getHeaderProps()}
@@ -116,7 +111,7 @@ const Table = () => {
                                     return (
                                         <td
                                             {...cell.getCellProps()}
-                                            class={'dark:text-neutral-50 h-fit px-9 py-5'}
+                                            className={'dark:text-neutral-50 h-fit px-9 py-5'}
                                         >
                                             {cell.render('Cell')}
                                         </td>

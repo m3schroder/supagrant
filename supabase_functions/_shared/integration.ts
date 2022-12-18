@@ -1,15 +1,17 @@
 import { OAuth2ClientConfig } from "https://deno.land/x/oauth2_client@v1.0.0/mod.ts";
 import { INTEGRATION_LIST } from "../_services/_integration_list.ts";
+import type {Database} from "@lib/supabase.ts";
 
 // Database Objection that represents an integration
-export type Integration = {
-  id?: string;
-  integration: string;
-  userId: string;
-  title: string;
-  access_token: string;
-  refresh_token: string;
-};
+export type Integration = Database.public.Tables.integeration
+// export type Integration = {
+//   id?: string;
+//   integration: string;
+//   userId: string;
+//   title: string;
+//   access_token: string;
+//   refresh_token: string;
+// };
 
 // Configuration of an integuration
 export class IntegrationConfig {
