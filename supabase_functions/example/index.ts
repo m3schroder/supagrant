@@ -1,10 +1,7 @@
 import { serve } from "https://deno.land/std@0.131.0/http/server.ts";
-import {
-  createClient,
-  PostgrestResponse,
-} from "https://esm.sh/@supabase/supabase-js@2.2.0";
+
 import { corsHeaders } from "../_shared/cors.ts";
-import { Integration } from "../_shared/integration.ts";
+import { getUpdatedIntegration } from "../_shared/token.ts";
 
 export type Subscription = {
   email: string;
@@ -24,8 +21,7 @@ serve(async (req: Request) => {
   // Get Integration
   const u = new URL(req.url);
   const integerationId = u.searchParams.get("integrationId")!;
-  const integrationResult = await getIntegration(integerationId);
-  const integration = integrationResult.data![0];
+  const integration = await getUpdatedIntegration(integerationId);
 
   let result = null;
   if (integration.integration == "AWEBER") {
@@ -36,16 +32,6 @@ serve(async (req: Request) => {
       }),
     });
     result = await response.json();
-  // Todo call an example mailchimp request0
-  } else if (integration.integration == "MAILCHIMP") {
-    const response = await fetch("", {
-      headers: new Headers({
-        Authorization: "Bearer " + integration.access_token,
-        "Content-Type": "application/x-www-form-urlencoded",
-      }),
-    });
-    result = await response.json();
-    
   }
 
   const data = {
@@ -65,22 +51,3 @@ serve(async (req: Request) => {
     });
   }
 });
-
-/**
- * Retrieve the integeration to know it's type (Aweber vs Mailchimp vs ..)
- */
-async function getIntegration(id: string) {
-  const supabaseClient = createClient(
-    // Supabase API URL - env var exported by default.
-    Deno.env.get("SUPABASE_URL") ?? "",
-    // Supabase API ANON KEY - env var exported by default.
-    Deno.env.get("SUPABASE_ANON_KEY") ?? ""
-  );
-
-  const result = await supabaseClient
-    .from("integeration")
-    .select("*")
-    .eq("id", id);
-
-  return result as PostgrestResponse<Integration>;
-}

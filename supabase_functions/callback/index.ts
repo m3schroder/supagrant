@@ -9,6 +9,8 @@ import {
 import { corsHeaders } from "../_shared/cors.ts";
 import { Integration, IntegrationConfig } from "../_shared/integration.ts";
 
+import { updateIntegration } from '../_shared/token.ts';
+
 serve(async (req: Request) => {
   // This is needed to invoke your function from a browser.
   if (req.method === "OPTIONS") {
@@ -83,32 +85,6 @@ async function getIntegration(id: string) {
   const result = await supabaseClient
     .from("integeration")
     .select("integration")
-    .eq("id", id);
-
-  return result as PostgrestResponse<Integration>;
-}
-
-/**
- * Save authentication access_token and refresh Token
- */
-async function updateIntegration(
-  id: string,
-  access_token: string,
-  refresh_token: string | undefined
-) {
-  const supabaseClient = createClient(
-    // Supabase API URL - env var exported by default.
-    Deno.env.get("SUPABASE_URL") ?? "",
-    // Supabase API ANON KEY - env var exported by default.
-    Deno.env.get("SUPABASE_ANON_KEY") ?? ""
-  );
-
-  const result = await supabaseClient
-    .from("integeration")
-    .update({
-      access_token: access_token,
-      refresh_token: refresh_token,
-    })
     .eq("id", id);
 
   return result as PostgrestResponse<Integration>;
