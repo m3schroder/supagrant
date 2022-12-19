@@ -26,6 +26,10 @@ KhaledGabr
 
 m3schroder
 
+** Supabase **
+
+Uses supabase functions & supabase Auth
+
 # Getting Started
 The package.json contains a script "db-generate" that can be used to generate the **"Database"** type that reflects the current 
 <strong  style="color: #22c55e">Supabase</strong> database. 
