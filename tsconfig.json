@@ -19,16 +19,17 @@
         "name": "next"
       }
     ],
+    "baseUrl": "./",
     "paths": {
       "@/styles/*": [
-        "./styles/*"
+        "styles/*"
       ],
       "@/ui/*": [
-        "./ui/*"
+        "ui/*"
       ],
       "@/lib/*": [
-        "./lib/*"
-      ],
+        "lib/*"
+      ]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
