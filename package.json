@@ -11,7 +11,7 @@
     "clean": "rmdir /s /q .next node_modules"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.5",
+    "@headlessui/react": "^1.7.7",
     "@supabase/auth-helpers-nextjs": "^0.5.2",
     "@supabase/auth-helpers-react": "^0.3.1",
     "@supabase/auth-ui-react": "^0.2.6",
