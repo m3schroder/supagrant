@@ -66,7 +66,7 @@ serve(async (req: Request) => {
 
   try {
     return Response.redirect(
-      "https://vercel-supanewsletter.com/integeration-completed?id=" +
+      "http://localhost:3000/integration-completed?id=" +
         integerationId,
       307
     );
