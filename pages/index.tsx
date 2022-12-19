@@ -1,8 +1,8 @@
 import {useState} from 'react'
-import ThemeToggler from "@ui/ThemeToggler";
-import Provider from "@ui/Provider";
+import ThemeToggler from "@/ui/ThemeToggler";
+import Provider from "@/ui/Provider";
 import {Combobox, Transition} from "@headlessui/react"
-import Details from "@ui/ProviderDetails";
+import Details from "@/ui/ProviderDetails";
 
 const Home = () => {
     const [list, setList] = useState(["Aweber", "MailChimp"]);

@@ -1,5 +1,5 @@
 import {useContext} from 'react';
-import {ThemeProvider, ThemeContext} from "@lib/themeContext";
+import {ThemeProvider, ThemeContext} from "@/lib/themeContext";
 import {Moon, Sun} from "react-feather"
 
 const ThemeToggler = ({cx}:any) => {

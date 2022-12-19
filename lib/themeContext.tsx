@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {setTheme as initialTheme} from "@lib/themeing";
+import {setTheme as initialTheme} from "@/lib/themeing";
 
 const ThemeContext = React.createContext({
     theme: "light",

@@ -1,6 +1,6 @@
 import {Auth, ThemeSupa} from '@supabase/auth-ui-react'
 import {useSession, useSupabaseClient} from '@supabase/auth-helpers-react'
-import ThemeToggler from '@ui/ThemeToggler';
+import ThemeToggler from '@/ui/ThemeToggler';
 import Link from 'next/link';
 import {ArrowLeft} from "react-feather"
 

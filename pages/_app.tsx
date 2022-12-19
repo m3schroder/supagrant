@@ -2,8 +2,8 @@ import {createContext, useContext, useEffect, useState} from 'react'
 import {createBrowserSupabaseClient} from '@supabase/auth-helpers-nextjs'
 import {SessionContextProvider, Session} from '@supabase/auth-helpers-react'
 import {AppProps} from 'next/app'
-import {ThemeProvider, ThemeContext} from "@lib/themeContext";
-import "@styles/globals.css"
+import {ThemeProvider, ThemeContext} from "@/lib/themeContext";
+import "@/styles/globals.css"
 
 function App({
                  Component,
