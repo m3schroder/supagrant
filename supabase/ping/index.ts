@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.131.0/http/server.ts";
-import { corsHeaders } from "../_shared/cors.ts";
+import { corsHeaders } from "../_shared/cors";
 
 serve((req: Request) => {
   // This is needed to invoke your function from a browser.

@@ -1,4 +1,4 @@
-import { aweber } from "./aweber.ts";
-import { mailchimp } from "./mailchimp.ts";
+import { aweber } from "./aweber";
+import { mailchimp } from "./mailchimp";
 
 export const INTEGRATION_LIST = [aweber, mailchimp];

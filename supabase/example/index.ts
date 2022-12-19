@@ -1,7 +1,7 @@
 import { serve } from "https://deno.land/std@0.131.0/http/server.ts";
 
-import { corsHeaders } from "../_shared/cors.ts";
-import { getUpdatedIntegration } from "../_shared/token.ts";
+import { corsHeaders } from "../_shared/cors";
+import { getUpdatedIntegration } from "../_shared/token";
 
 export type Subscription = {
   email: string;

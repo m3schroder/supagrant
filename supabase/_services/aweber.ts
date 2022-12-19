@@ -1,5 +1,5 @@
 // Setup the Outh2 Object
-import { IntegrationConfig } from "../_shared/integration.ts";
+import { IntegrationConfig } from "../_shared/integration";
 
 export const aweber: IntegrationConfig = new IntegrationConfig({
   name: "AWEBER",

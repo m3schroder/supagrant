@@ -7,9 +7,9 @@ import {
 } from "https://esm.sh/@supabase/supabase-js@2.2.0";
 
 import { corsHeaders } from "../_shared/cors.ts";
-import { Integration, IntegrationConfig } from "../_shared/integration.ts";
+import { Integration, IntegrationConfig } from "../_shared/integration";
 
-import { updateIntegration } from "../_shared/token.ts";
+import { updateIntegration } from "../_shared/token";
 
 serve(async (req: Request) => {
   // This is needed to invoke your function from a browser.

@@ -1,11 +1,11 @@
 import { serve } from "https://deno.land/std@0.131.0/http/server.ts";
 import { OAuth2Client } from "https://deno.land/x/oauth2_client@v1.0.0/mod.ts";
-import { corsHeaders } from "../_shared/cors.ts";
+import { corsHeaders } from "../_shared/cors";
 import {
   createClient,
   PostgrestResponse,
 } from "https://esm.sh/@supabase/supabase-js@2.2.0";
-import { Integration, IntegrationConfig } from "../_shared/integration.ts";
+import { Integration, IntegrationConfig } from "../_shared/integration";
 
 serve(async (req: Request): Promise<Response> => {
   // This is needed to invoke your function from a browser.
