@@ -26,7 +26,7 @@ KhaledGabr
 
 m3schroder
 
-** Supabase **
+**Built using Supabase**
 
 Uses supabase functions & supabase Auth
 
