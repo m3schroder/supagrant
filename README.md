@@ -1,9 +1,16 @@
 # Motivation
+Grant permissions to external services in minutes
 
-This application is intended to make it easier for developers to integrate with email services such as Mailchimp, Aweber, etc.
-The developer can login using <strong  style="color: #22c55e">Supabase</strong> Auth and add the API credentials of their newsletter service. 
+Example use cases:
+You want to grant permission to your Mailchimp account to notify customers of key events in your application or perform certain actions.
+You want to allow your users to integrate with their MailChimp/Twilio account, so that they can notify their customers on key events or perform certain actions.
+You want to allow your users to intenerate with their Github account to automatically perform spell checks on their commits. etc.
 
-<br>On the frontend of the application (regardless of the framework they are using) .. they will be able to call a supabase function with the ID of their newsletter service, email, and name to subscribe the end user easily without writing any backend code for it and while having full control of the UI.
+Features:
+Supports multi-tenant Application (Can integrates with your services and your user' services)
+Stores access_token needed to make API calls to different services
+Automatically refreshes access_token when it expires
+A monorepo with a growing list of services that it integrates with out of the box.
 
 
 # Getting Started
