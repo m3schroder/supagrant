@@ -1,6 +1,5 @@
 import {Auth, ThemeSupa} from '@supabase/auth-ui-react'
 import {useSession, useSupabaseClient} from '@supabase/auth-helpers-react'
-import Account from "@ui/Account";
 import ThemeToggler from '@ui/ThemeToggler';
 import Link from 'next/link';
 import {ArrowLeft} from "react-feather"
@@ -24,7 +23,7 @@ const Home = () => {
                         }}/>
                     </div>
                 ) : (
-                    <Account session={session}/>
+                    <></>
                 )}
             </div>
             <ThemeToggler cx={"fixed bottom-5 right-5"}/>

@@ -3,7 +3,6 @@ import ThemeToggler from "@ui/ThemeToggler";
 import Provider from "@ui/Provider";
 import {Combobox, Transition} from "@headlessui/react"
 import Details from "@ui/ProviderDetails";
-import {IntegrationConfig} from "../supabase/_shared/integration";
 
 const Home = () => {
     const [list, setList] = useState(["Aweber", "MailChimp"]);

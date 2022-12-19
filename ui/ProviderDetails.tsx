@@ -1,5 +1,6 @@
 import {useState, Fragment} from 'react'
 import {Dialog, Transition} from '@headlessui/react'
+import router from 'next/router';
 import {X, Loader as Load} from "react-feather"
 
 const Details = ({selected, open, close}) => {
@@ -14,10 +15,8 @@ const Details = ({selected, open, close}) => {
         })
     }
     const testConnection = async (e: any) => {
-        setLoading(true)
-        await startAuth(selected).then(() => {
-            setLoading(false)
-        })
+        await startAuth(selected);
+        e.stopPropagation()
         e.preventDefault()
     }
 
@@ -45,7 +44,7 @@ const Details = ({selected, open, close}) => {
                             <Dialog.Description>
                                 Configurations for the {selected} Provider
                             </Dialog.Description>
-                            <form className={"flex flex-col gap-4 py-8"} onSubmit={async (e) => testConnection()}>
+                            <form className={"flex flex-col gap-4 py-8"} onSubmit={testConnection}>
                                 <input placeholder={'Client ID'}
                                        className={"bg-white shadow-sm border-1 border-neutral-200 px-2  focus:outline-none focus:border-neutral-300 flex mb-1 flex-col py-1 rounded-lg  w-full gap-1"}/>
                                 <input placeholder={'Client Secret'}
