@@ -3,7 +3,7 @@ import {Dialog, Transition} from '@headlessui/react'
 import router from 'next/router';
 import {X, Loader as Load} from "react-feather"
 
-const Details = ({selected, open, close}) => {
+const Details = ({selected, open, close}:any) => {
     const [loading, setLoading] = useState(false)
     const startAuth = async (provider: string, title: string = 'primary') => {
         const url = new URL("https://azmzvdpframywobqkjmz.functions.supabase.co/authorize");
